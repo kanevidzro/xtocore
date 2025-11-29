@@ -10,11 +10,11 @@ const transporter = nodemailer.createTransport({
   secure: Number(process.env.SMTP_PORT) === 465,
   auth: {
     user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASSWORD,
+    pass: process.env.SMTP_PASS,
   },
 });
 
-// Utility to send an email with text or HTML
+// Utility to send an email
 export async function sendMail({
   to,
   subject,

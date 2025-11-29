@@ -16,6 +16,11 @@ server.get("/", (c) => {
 
 server.notFound((c) => c.json({ error: "Route not found" }, 404));
 
+server.onError((err, c) => {
+  console.error("Unhandled error:", err);
+  return c.json({ error: "Internal server error" }, 500);
+});
+
 // Bun server
 Bun.serve({
   port: 1502,

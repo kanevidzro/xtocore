@@ -140,8 +140,8 @@ services:
     container_name: xtocore-grafana
     restart: always
     environment:
-      GF_SECURITY_ADMIN_USER: admin
-      GF_SECURITY_ADMIN_PASSWORD: admin123
+     GF_SECURITY_ADMIN_USER: ${GRAFANA_ADMIN_USER}
+     GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_ADMIN_PASSWORD}
     networks:
       - xtocore_network
     volumes:

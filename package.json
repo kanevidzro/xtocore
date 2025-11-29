@@ -9,7 +9,6 @@
     "typecheck": "turbo run typecheck"
   },
   "devDependencies": {
-    "@types/pg": "^8.15.6",
     "prettier": "^3.7.2",
     "turbo": "^2.6.1",
     "typescript": "5.9.3"

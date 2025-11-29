@@ -1,45 +1,6 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:base"],
-  "dependencyDashboard": true,
-  "packageRules": [
-    {
-      "matchPackagePatterns": ["^@workspace/"],
-      "enabled": false
-    },
-    {
-      "matchUpdateTypes": ["patch", "minor"],
-      "matchPackagePatterns": ["*"],
-      "automerge": true,
-      "groupName": "safe updates",
-      "labels": ["dependencies", "automerge"]
-    },
-    {
-      "matchUpdateTypes": ["major"],
-      "matchPackagePatterns": ["*"],
-      "groupName": "major updates",
-      "labels": ["dependencies", "major"]
-    }
-  ],
-  "lockFileMaintenance": {
-    "enabled": true,
-    "schedule": ["at any time"],
-    "automerge": true,
-    "postUpdateTasks": {
-      "commands": ["bun install"],
-      "fileFilters": ["**/package.json"]
-    }
-  },
-  "monorepo": {
-    "enabled": true,
-    "packagePatterns": [
-      "package.json",
-      "apps/*/package.json",
-      "packages/*/package.json"
-    ]
-  },
-  "schedule": ["every weekend"],
-  "prConcurrentLimit": 5,
-  "rangeStrategy": "auto",
-  "reviewers": ["kanevidzro"]
+  "extends": [
+    "config:recommended"
+  ]
 }

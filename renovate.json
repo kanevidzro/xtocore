@@ -10,7 +10,6 @@
       "matchUpdateTypes": ["patch", "minor"],
       "matchPackagePatterns": ["*"],
       "automerge": true,
-      "automergeType": "branch",
       "groupName": "safe updates",
       "labels": ["dependencies", "automerge"]
     },
@@ -19,12 +18,6 @@
       "matchPackagePatterns": ["*"],
       "groupName": "major updates",
       "labels": ["dependencies", "major"]
-    },
-    {
-      "matchPackagePatterns": ["*"],
-      "groupName": "all dependencies",
-      "automerge": false,
-      "labels": ["dependencies"]
     }
   ],
   "lockFileMaintenance": {
@@ -47,6 +40,5 @@
   "schedule": ["every weekend"],
   "prConcurrentLimit": 5,
   "rangeStrategy": "auto",
-  "reviewers": ["kanevidzro"],
-  "labels": ["renovate"]
+  "reviewers": ["kanevidzro"]
 }

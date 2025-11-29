@@ -1,6 +1,7 @@
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { logger } from "hono/logger";
+import { auth } from "./lib/auth";
 
 const server = new Hono();
 
@@ -12,6 +13,10 @@ server.use("*", cors());
 
 server.get("/", (c) => {
   return c.json({ message: "Hello from the API server!" });
+});
+
+server.on(["POST", "GET"], "/auth/*", async (c) => {
+  return auth.handler(c.req.raw);
 });
 
 server.notFound((c) => c.json({ error: "Route not found" }, 404));

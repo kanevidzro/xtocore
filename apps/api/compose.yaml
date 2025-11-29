@@ -8,6 +8,8 @@ volumes:
   postgres_data:
   redis_data:
   minio_data:
+  grafana_data:
+  letsencrypt:
 
 services:
   #
@@ -55,7 +57,7 @@ services:
       - xtocore_network
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.api.rule=Host(`${SERVER_DOMAIN}`)"
+      - "traefik.http.routers.api.rule=Host(`api.${SERVER_DOMAIN}`)"
       - "traefik.http.routers.api.entrypoints=websecure"
       - "traefik.http.routers.api.tls.certresolver=myresolver"
       - "traefik.http.services.api.loadbalancer.server.port=1502"
@@ -66,7 +68,7 @@ services:
       "
 
   #
-  # Postgres (internal only)
+  # PostgreSQL (internal)
   #
   postgres:
     image: postgres:16
@@ -87,7 +89,7 @@ services:
       retries: 5
 
   #
-  # Redis (internal only)
+  # Redis (internal)
   #
   redis:
     image: redis:7-alpine
@@ -104,7 +106,7 @@ services:
       retries: 5
 
   #
-  # MinIO (internal only)
+  # MinIO (console exposed via Traefik)
   #
   minio:
     image: minio/minio:latest
@@ -124,4 +126,29 @@ services:
       timeout: 5s
       retries: 5
     labels:
-      - "traefik.enable=false"
+      - "traefik.enable=true"
+      - "traefik.http.routers.minio.rule=Host(`minio.${SERVER_DOMAIN}`)"
+      - "traefik.http.routers.minio.entrypoints=websecure"
+      - "traefik.http.routers.minio.tls.certresolver=myresolver"
+      - "traefik.http.services.minio.loadbalancer.server.port=9001"
+
+  #
+  # Grafana (dashboard)
+  #
+  grafana:
+    image: grafana/grafana:latest
+    container_name: xtocore-grafana
+    restart: always
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: admin123
+    networks:
+      - xtocore_network
+    volumes:
+      - grafana_data:/var/lib/grafana
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.grafana.rule=Host(`grafana.${SERVER_DOMAIN}`)"
+      - "traefik.http.routers.grafana.entrypoints=websecure"
+      - "traefik.http.routers.grafana.tls.certresolver=myresolver"
+      - "traefik.http.services.grafana.loadbalancer.server.port=3000"

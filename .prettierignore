@@ -1,0 +1,13 @@
+# .prettierignore
+
+# Prisma
+**/prisma/generated/**
+**/prisma/migrations/**
+
+# Node
+node_modules
+
+# Build
+dist
+.build
+out

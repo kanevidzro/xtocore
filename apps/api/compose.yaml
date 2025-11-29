@@ -8,13 +8,8 @@ volumes:
   postgres_data:
   redis_data:
   minio_data:
-<<<<<<< HEAD
   inngest_data:
   svix_data:
-=======
-  grafana_data:
-  letsencrypt:
->>>>>>> 52cd4d22b3f2b5ebc292555337ac34ec0be6ec10
 
 services:
   traefik:
@@ -71,12 +66,6 @@ services:
         bun run dist/server.js
       "
 
-<<<<<<< HEAD
-=======
-  #
-  # PostgreSQL (internal)
-  #
->>>>>>> 52cd4d22b3f2b5ebc292555337ac34ec0be6ec10
   postgres:
     image: postgres:16
     restart: unless-stopped
@@ -95,12 +84,6 @@ services:
       retries: 10
       start_period: 10s
 
-<<<<<<< HEAD
-=======
-  #
-  # Redis (internal)
-  #
->>>>>>> 52cd4d22b3f2b5ebc292555337ac34ec0be6ec10
   redis:
     image: redis:7-alpine
     restart: unless-stopped
@@ -115,12 +98,6 @@ services:
       timeout: 5s
       retries: 5
 
-<<<<<<< HEAD
-=======
-  #
-  # MinIO (console exposed via Traefik)
-  #
->>>>>>> 52cd4d22b3f2b5ebc292555337ac34ec0be6ec10
   minio:
     image: minio/minio:latest
     restart: unless-stopped
@@ -140,7 +117,10 @@ services:
       - "traefik.http.services.minio.loadbalancer.server.port=9001"
     healthcheck:
       test:
-        ["CMD-SHELL", "curl -f http://localhost:9001/minio/health/live || exit 1"]
+        [
+          "CMD-SHELL",
+          "curl -f http://localhost:9001/minio/health/live || exit 1",
+        ]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -169,7 +149,6 @@ services:
       - xtocore_network
     labels:
       - "traefik.enable=true"
-<<<<<<< HEAD
       - "traefik.http.routers.svix.rule=Host(`webhooks.${SERVER_DOMAIN}`)"
       - "traefik.http.routers.svix.entrypoints=websecure"
       - "traefik.http.routers.svix.tls.certresolver=myresolver"
@@ -187,30 +166,3 @@ services:
       interval: 10s
       retries: 5
       timeout: 5s
-=======
-      - "traefik.http.routers.minio.rule=Host(`minio.${SERVER_DOMAIN}`)"
-      - "traefik.http.routers.minio.entrypoints=websecure"
-      - "traefik.http.routers.minio.tls.certresolver=myresolver"
-      - "traefik.http.services.minio.loadbalancer.server.port=9001"
-
-  #
-  # Grafana (dashboard)
-  #
-  grafana:
-    image: grafana/grafana:latest
-    container_name: xtocore-grafana
-    restart: always
-    environment:
-     GF_SECURITY_ADMIN_USER: ${GRAFANA_ADMIN_USER}
-     GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_ADMIN_PASSWORD}
-    networks:
-      - xtocore_network
-    volumes:
-      - grafana_data:/var/lib/grafana
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.grafana.rule=Host(`grafana.${SERVER_DOMAIN}`)"
-      - "traefik.http.routers.grafana.entrypoints=websecure"
-      - "traefik.http.routers.grafana.tls.certresolver=myresolver"
-      - "traefik.http.services.grafana.loadbalancer.server.port=3000"
->>>>>>> 52cd4d22b3f2b5ebc292555337ac34ec0be6ec10

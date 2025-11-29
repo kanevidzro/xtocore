@@ -30,8 +30,8 @@
     "@workspace/eslint-config": "*",
     "@workspace/typescript-config": "*",
     "@types/node": "^22.15.3",
-    "@types/react": "19.2.2",
-    "@types/react-dom": "19.2.2",
+    "@types/react": "19.2.7",
+    "@types/react-dom": "19.2.3",
     "eslint": "^9.39.1",
     "tailwindcss": "^4.1.11",
     "typescript": "5.9.2"

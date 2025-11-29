@@ -9,25 +9,15 @@
     {
       "matchUpdateTypes": ["patch", "minor"],
       "matchPackagePatterns": ["*"],
-      "automerge": true,
-      "groupName": "safe updates",
-      "labels": ["dependencies", "automerge"]
+      "automerge": true
     },
     {
       "matchUpdateTypes": ["major"],
-      "matchPackagePatterns": ["*"],
-      "groupName": "major updates",
-      "labels": ["dependencies", "major"]
+      "matchPackagePatterns": ["*"]
     }
   ],
   "lockFileMaintenance": {
-    "enabled": true,
-    "schedule": ["at any time"],
-    "automerge": true,
-    "postUpdateTasks": {
-      "commands": ["bun install"],
-      "fileFilters": ["**/package.json"]
-    }
+    "enabled": true
   },
   "monorepo": {
     "enabled": true,
@@ -36,9 +26,5 @@
       "apps/*/package.json",
       "packages/*/package.json"
     ]
-  },
-  "schedule": ["every weekend"],
-  "prConcurrentLimit": 5,
-  "rangeStrategy": "auto",
-  "reviewers": ["kanevidzro"]
+  }
 }

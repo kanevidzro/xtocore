@@ -10,7 +10,7 @@ import ResetPasswordEmail from "../emails/ResetPasswordEmail";
 export const auth = betterAuth({
   database: prismaAdapter(prisma, { provider: "postgresql" }),
   basePath: "/auth",
-  trustedOrigins: ["http://localhost:3000"],
+  trustedOrigins: [process.env.NEXT_PUBLIC_URL!],
   appName: "Xtocore API",
   session: {
     expiresIn: 60 * 60 * 24 * 7,
